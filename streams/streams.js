@@ -62,6 +62,13 @@ function processFile(inputStream) {
   });
 
   stream.pipe(upperStream);
-  var targetStream = process.stdout;
+  var targetStream;
+  console.log(args.out);
+  if (args.out) {
+    targetStream = process.stdout;
+  } else {
+    targetStream = fs.createWriteStream(OUTPATH);
+  }
+
   stream.pipe(targetStream);
 }
