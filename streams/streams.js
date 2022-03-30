@@ -61,9 +61,15 @@ function processFile(inputStream) {
     }
   });
 
-  stream.pipe(upperStream);
+  outStream = stream.pipe(upperStream);
+  console.log(args.compress);
+  if (args.compress) {
+    let gzip = zlib.createGzip();
+    outStream = outStream.pipe(gzip);
+    OUTPATH = OUTPATH + '.gz';
+  }
   var targetStream;
-  console.log(args.out);
+
   if (args.out) {
     targetStream = process.stdout;
   } else {
