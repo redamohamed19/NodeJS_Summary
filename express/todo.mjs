@@ -12,6 +12,7 @@ app.use(urlencoded({ extended: true })); //=> to attach to the url string some p
 app.use(cors()); //=>used to enable interact with other domains.
 app.use(json()); //=>used to get responsve from body in json
 app.use(morgan('dev')); //this what show all the logs from our server
+const Router = express.Router();
 
 // implement custom middlware
 // we can call this middlware in 3 way
@@ -19,7 +20,10 @@ app.use(morgan('dev')); //this what show all the logs from our server
     2- in specified request to run just in that request 
     3- array in specified request to run servel middlware with that request
     */
-
+Router.get('/me', (req, res) => {
+  res.send({ data: 'from subrouter' });
+});
+app.use('/api', Router);
 const log = (req, res, next) => {
   console.log('loggingig');
   next();
